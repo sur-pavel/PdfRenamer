@@ -10,7 +10,6 @@ namespace PdfRenamer
     internal class PDFHandler : System.Web.UI.Page
     {
         internal Log log;
-        internal bool notPDF;
         private Patterns patterns;
         private string inputFile;
         private string outputFile;
@@ -25,7 +24,6 @@ namespace PdfRenamer
 
         internal Article GetPdfPageText(FileInfo file, Article article)
         {
-            patterns = new Patterns();
             PdfReader pdfReader = GetPdfReader(file);
             if (pdfReader != null)
             {
@@ -167,7 +165,6 @@ namespace PdfRenamer
             catch (iTextSharp.text.exceptions.InvalidPdfException)
             {
                 log.WriteLine("Not a pdf file: " + file.Name);
-                notPDF = true;
                 return null;
             }
         }

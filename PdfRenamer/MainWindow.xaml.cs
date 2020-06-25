@@ -45,10 +45,9 @@ namespace PdfRenamer
             fileHandler.log = log;
             excelHandler.CreatExcelObject();
             log.CreateLogFile();
-            filesInfoList = GetFiles();
-            infoListIndex = 0;
             InitializeComponent();
-            InfoLabel.Content = "DKKD";
+            infoListIndex = 0;
+            InfoLabel.Content = "Выберите папки";
             InputPath.Text = @"d:\на переименование\";
             OutputPath.Text = @"d:\переим\";
         }
@@ -100,6 +99,7 @@ namespace PdfRenamer
                 filesInfoList = fileHandler.GetFileNames(InputPath.Text);
                 return filesInfoList;
             }
+
             InfoLabel.Content = "Выберите папку с pdf-файлами и папку назначения";
             return new List<FileInfo>();
         }
@@ -125,8 +125,20 @@ namespace PdfRenamer
         private Article GetCurrentArticle()
         {
             currentArticle = new Article();
-            currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
-            currentArticle = articleParser.ParsePdfText(currentArticle);
+
+            if (!currentArticle.PdfText.ToString().Equals(""))
+            {
+                currentArticle = articleParser.ParsePdfText(currentArticle);
+            }
+            else
+            {
+                while (currentArticle.PdfText.ToString().Equals(""))
+                {
+                    infoListIndex++;
+                    currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
+                }
+            }
+
             return currentArticle;
         }
 
