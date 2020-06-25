@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -33,23 +34,31 @@ namespace PdfRenamer
 
         public MainWindow()
         {
-            fileHandler = new FileHandler();
-            excelHandler = new ExcelHandler(log);
-            articleParser = new ArticleParser(log, patterns);
-            pdfHandler = new PDFHandler(log, patterns);
-            FileUtil fileUtil = new FileUtil();
-            fileUtil.KillProcesses("excel");
-            filesToDelete = new HashSet<string>();
-            fromShowMethod = true;
+            try
+            {
+                fileHandler = new FileHandler();
+                excelHandler = new ExcelHandler(log);
+                articleParser = new ArticleParser(log, patterns);
+                pdfHandler = new PDFHandler(log, patterns);
+                FileUtil fileUtil = new FileUtil();
+                fileUtil.KillProcesses("excel");
+                filesToDelete = new HashSet<string>();
+                fromShowMethod = true;
 
-            fileHandler.log = log;
-            excelHandler.CreatExcelObject();
-            log.CreateLogFile();
-            InitializeComponent();
-            infoListIndex = 0;
-            InfoLabel.Content = "Выберите папки";
-            InputPath.Text = @"d:\на переименование\";
-            OutputPath.Text = @"d:\переим\";
+                fileHandler.log = log;
+                excelHandler.CreatExcelObject();
+                log.CreateLogFile();
+                InitializeComponent();
+                infoListIndex = 0;
+                InfoLabel.Content = "Выберите папки";
+                InputPath.Text = @"d:\на переименование\";
+                OutputPath.Text = @"d:\переим\";
+            }
+            catch (Exception e)
+            {
+                log.WriteLine(e.Message, e.StackTrace);
+                throw;
+            }
         }
 
         private void NextFileClick(object sender, RoutedEventArgs e)

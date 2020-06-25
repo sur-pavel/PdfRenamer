@@ -12,7 +12,7 @@ namespace PdfRenamer
 
         public void CreateLogFile()
         {
-            string fileName = "OCRLayerCheck_" + DateTime.Now.ToString().Replace(":", "-") + ".log";
+            string fileName = "PdfRenamer_" + DateTime.Now.ToString().Replace(":", "-") + ".log";
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             Directory.CreateDirectory(appPath + @"\logs\");
