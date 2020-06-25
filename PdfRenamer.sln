@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.128
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfRenamer", "PdfRenamer\PdfRenamer.csproj", "{E1B53CCD-3A2E-4BB0-B585-CC9EF83254D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1B53CCD-3A2E-4BB0-B585-CC9EF83254D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B53CCD-3A2E-4BB0-B585-CC9EF83254D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B53CCD-3A2E-4BB0-B585-CC9EF83254D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B53CCD-3A2E-4BB0-B585-CC9EF83254D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09621DF1-4FC5-4503-BF1B-D32081091E06}
+	EndGlobalSection
+EndGlobal
