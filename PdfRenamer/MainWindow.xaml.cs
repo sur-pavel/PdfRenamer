@@ -45,7 +45,7 @@ namespace PdfRenamer
                 filesToDelete = new HashSet<string>();
                 fromShowMethod = true;
 
-                fileHandler.log = log;
+                fileHandler.Log = log;
                 excelHandler.CreatExcelObject();
                 log.CreateLogFile();
                 InitializeComponent();
