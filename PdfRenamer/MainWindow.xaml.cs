@@ -50,9 +50,8 @@ namespace PdfRenamer
                 log.CreateLogFile();
                 InitializeComponent();
                 infoListIndex = 0;
-                InfoLabel.Content = "Выберите папки";
-                InputPath.Text = @"d:\на переименование\";
-                OutputPath.Text = @"d:\переим\";
+                InputPath.Text = @"c:\Users\sur-p\Downloads\на переименование\";
+                OutputPath.Text = @"c:\Users\sur-p\Downloads\переим\";
             }
             catch (Exception e)
             {
@@ -134,19 +133,14 @@ namespace PdfRenamer
         private Article GetCurrentArticle()
         {
             currentArticle = new Article();
+            currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
+            while (currentArticle.PdfText.ToString().Equals(""))
+            {
+                infoListIndex++;
+                currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
+                
+            }
 
-            if (!currentArticle.PdfText.ToString().Equals(""))
-            {
-                currentArticle = articleParser.ParsePdfText(currentArticle);
-            }
-            else
-            {
-                while (currentArticle.PdfText.ToString().Equals(""))
-                {
-                    infoListIndex++;
-                    currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
-                }
-            }
 
             return currentArticle;
         }
@@ -316,7 +310,10 @@ namespace PdfRenamer
         private void InputPath_TextChanged(object sender, TextChangedEventArgs e)
         {
             filesInfoList = GetFiles();
-            ShowPDF();
+            if (filesInfoList.Count > 0)
+            {
+                ShowPDF();
+            }
         }
 
         private void OutputPath_TextChanged(object sender, TextChangedEventArgs e)
