@@ -138,9 +138,7 @@ namespace PdfRenamer
             {
                 infoListIndex++;
                 currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
-                
             }
-
 
             return currentArticle;
         }
