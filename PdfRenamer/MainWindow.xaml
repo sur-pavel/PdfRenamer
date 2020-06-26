@@ -30,10 +30,10 @@
         <Label Content="Том журнала/книги" HorizontalAlignment="Left" Margin="14,245,0,0" VerticalAlignment="Top" />
         <TextBox Name="JVolumeInput" HorizontalAlignment="Left" Height="24" Margin="147,245,0,0" TextWrapping="Wrap" Text="Введите Том журнала/книги" VerticalAlignment="Top" Width="120" TextChanged="JVolumeInput_TextChanged" />
         <Label Content="Из" HorizontalAlignment="Left" Margin="14,308,0,0" VerticalAlignment="Top" />
-        <TextBox Name="InputPath" HorizontalAlignment="Left" Height="24" Margin="81,308,0,0" TextWrapping="Wrap" Text="Выберите с pdf-файлам" VerticalAlignment="Top" Width="120" TextChanged="InputPath_TextChanged" />
+        <TextBox Name="InputPath" HorizontalAlignment="Left" Height="24" Margin="81,308,0,0" TextWrapping="Wrap" Text="Выберите папку с pdf-файлами" VerticalAlignment="Top" Width="120" TextChanged="InputPath_TextChanged" />
         <Button Content="Открыть" HorizontalAlignment="Left" Margin="206,312,0,0" VerticalAlignment="Top" Width="75" Click="InputPath_Click" />
         <Label Content="В" HorizontalAlignment="Left" Margin="14,346,0,0" VerticalAlignment="Top" />
-        <TextBox Name="OutputPath" HorizontalAlignment="Left" Height="23" Margin="81,346,0,0" TextWrapping="Wrap" Text="Выберите папку назначение" VerticalAlignment="Top" Width="120" TextChanged="OutputPath_TextChanged" />
+        <TextBox Name="OutputPath" HorizontalAlignment="Left" Height="23" Margin="81,346,0,0" TextWrapping="Wrap" Text="Выберите папку назначения" VerticalAlignment="Top" Width="120" TextChanged="OutputPath_TextChanged" />
         <Button Content="Открыть" HorizontalAlignment="Left" Margin="206,349,0,0" VerticalAlignment="Top" Width="75" Click="OutputPath_Click" />
         <TextBox Name="NewFileNameInput" HorizontalAlignment="Left" Height="23" Margin="14,386,0,20" TextWrapping="Wrap" Text="Новое имя файла" VerticalAlignment="Bottom" Width="344" />
         <Button Content="След. файл" HorizontalAlignment="Left" Margin="126,399,0,0" VerticalAlignment="Top" Width="75"  Click="NextFileClick" />
