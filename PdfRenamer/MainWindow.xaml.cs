@@ -114,7 +114,7 @@ namespace PdfRenamer
 
         private void ShowPDF()
         {
-            fromShowMethod = false;
+            fromShowMethod = true;
             stackTraceFrame = new StackTrace().GetFrame(0);
             currentArticle = GetCurrentArticle();
             log.WriteLine($"{stackTraceFrame.GetMethod()} Old fileName: {filesInfoList[infoListIndex].Name}:");
@@ -127,7 +127,7 @@ namespace PdfRenamer
 
             OldFileNameLabel.Content = filesInfoList[infoListIndex].Name;
             InfoLabel.Content = string.Empty;
-            fromShowMethod = true;
+            fromShowMethod = false;
         }
 
         private Article GetCurrentArticle()
