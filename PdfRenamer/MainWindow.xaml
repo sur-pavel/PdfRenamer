@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PdfRenamer"
         mc:Ignorable="d"
-        Title="PdfRenamer" Height="502.5" Width="1095.5">
+        Title="PdfRenamer" Height="601.585" Width="1095.5">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="46*" />

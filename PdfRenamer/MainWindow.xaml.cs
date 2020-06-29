@@ -34,6 +34,8 @@ namespace PdfRenamer
 
         public MainWindow()
         {
+            WindowState = WindowState.Maximized;
+           
             try
             {
                 fileHandler = new FileHandler();
@@ -50,8 +52,8 @@ namespace PdfRenamer
                 log.CreateLogFile();
                 InitializeComponent();
                 infoListIndex = 0;
-                InputPath.Text = @"c:\Users\sur-p\Downloads\на переименование\";
-                OutputPath.Text = @"c:\Users\sur-p\Downloads\переим\";
+                InputPath.Text = @"d:\на переименование\";
+                OutputPath.Text = @"d:\переим\";
             }
             catch (Exception e)
             {

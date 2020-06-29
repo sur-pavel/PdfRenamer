@@ -19,7 +19,7 @@ namespace PdfRenamer
                 if (Directory.Exists(path))
                 {
                     files = new DirectoryInfo(path).GetFiles("*.pdf");
-                    outfiles = files.Where(x => x?.Name.Contains(".pdf") == true && x.Exists).ToList();
+                    outfiles = files.Where(x => x.Exists && x?.Name.Contains(".pdf") == true).ToList();
                 }
             }
             catch (Exception ex)
