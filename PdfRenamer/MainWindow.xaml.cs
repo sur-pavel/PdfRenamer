@@ -158,7 +158,7 @@ namespace PdfRenamer
         {
             currentArticle.FileName = NewFileNameInput.Text;
 
-            if (currentArticle.FileName.Contains(".pdf"))
+            if (currentArticle.FileName.Contains(".pdf") && patterns.MatchDirectoryPath(OutputPath.Text).Success)
             {
                 stackTraceFrame = new StackTrace().GetFrame(0);
                 log.WriteLine(stackTraceFrame.GetMethod() + " New fileName:" + nameForFile);
@@ -191,7 +191,8 @@ namespace PdfRenamer
             }
             else
             {
-                InfoLabel.Content = nameForFile;
+                InfoLabel.Content = "Выберите папку с pdf-файлами и папку назначения";
+
             }
         }
 
