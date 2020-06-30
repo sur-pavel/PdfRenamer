@@ -5,41 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PdfRenamer"
         mc:Ignorable="d"
-        Title="PdfRenamer" Height="601.585" Width="1095.5">
+        Title="PdfRenamer" Height="601.585" Width="1303.5">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="46*" />
-            <ColumnDefinition Width="53*" />
+            <ColumnDefinition Width="253*" />
+            <ColumnDefinition Width="284*" />
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="OldFileNameLabel" Content="Старое имя файла" HorizontalAlignment="Left" Margin="14,364,0,0" VerticalAlignment="Top" />
-        <Label Name="InfoLabel" Content="Инфо" HorizontalAlignment="Left" Margin="486,428,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.902,0.5" Grid.ColumnSpan="2" />
+        <Label Name="OldFileNameLabel" Content="Старое имя файла" HorizontalAlignment="Left" Margin="14,451,0,0" VerticalAlignment="Top" />
+        <Label Name="InfoLabel" Content="Инфо" HorizontalAlignment="Left" Margin="16,497,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.902,0.5" />
         <Label  Content="Автор" HorizontalAlignment="Left" Margin="14,29,0,0" VerticalAlignment="Top" />
-        <TextBox Name="AutorInput" HorizontalAlignment="Left" Height="23" Margin="81,29,0,0" TextWrapping="Wrap" Text="Введите автора" VerticalAlignment="Top" Width="326" TextChanged="AutorInput_TextChanged" />
-        <Label Content="Заглавие" HorizontalAlignment="Left" Margin="14,60,0,0" VerticalAlignment="Top" />
-        <TextBox Name="TitleInput" HorizontalAlignment="Left" Height="23" Margin="81,60,0,0" TextWrapping="Wrap" Text="Введите заглавие" VerticalAlignment="Top" Width="326" TextChanged="TitleInput_TextChanged" />
-        <Label Content="Место" HorizontalAlignment="Left" Margin="14,100,0,0" VerticalAlignment="Top" />
-        <TextBox Name="TownInput" HorizontalAlignment="Left" Height="23" Margin="124,100,0,0" TextWrapping="Wrap" Text="Введите место" VerticalAlignment="Top" Width="283" TextChanged="TownInput_TextChanged" />
-        <Label Content="Год" HorizontalAlignment="Left" Margin="14,128,0,0" VerticalAlignment="Top" />
-        <TextBox Name="YearInput" HorizontalAlignment="Left" Height="23" Margin="124,128,0,0" TextWrapping="Wrap" Text="Введите год" VerticalAlignment="Top" Width="283" TextChanged="YearInput_TextChanged" />
-        <Label Content="Страницы" HorizontalAlignment="Left" Margin="14,161,0,0" VerticalAlignment="Top" />
-        <TextBox Name="PagesInput" HorizontalAlignment="Left" Height="23" Margin="124,161,0,0" TextWrapping="Wrap" Text="Введите старницы" VerticalAlignment="Top" Width="283" TextChanged="PagesInput_TextChanged" />
-        <Label Content="Заглавие журнала" HorizontalAlignment="Left" Margin="14,189,0,0" VerticalAlignment="Top" />
-        <TextBox Name="JTitleInput" HorizontalAlignment="Left" Height="23" Margin="124,189,0,0" TextWrapping="Wrap" Text="Введите название журнала" VerticalAlignment="Top" Width="283" TextChanged="JTitleInput_TextChanged" />
-        <Label Content="№ журнала" HorizontalAlignment="Left" Margin="14,217,0,0" VerticalAlignment="Top" />
-        <TextBox Name="JNumberInput" HorizontalAlignment="Left" Height="23" Margin="124,217,0,0" TextWrapping="Wrap" Text="Введите № журнала" VerticalAlignment="Top" Width="283" TextChanged="JNumberInput_TextChanged" />
-        <Label Content="Том журнала/книги" HorizontalAlignment="Left" Margin="14,245,0,0" VerticalAlignment="Top" />
-        <TextBox Name="JVolumeInput" HorizontalAlignment="Left" Height="24" Margin="147,245,0,0" TextWrapping="Wrap" Text="Введите Том журнала/книги" VerticalAlignment="Top" Width="174" TextChanged="JVolumeInput_TextChanged" />
-        <Label Content="Из" HorizontalAlignment="Left" Margin="14,308,0,0" VerticalAlignment="Top" />
-        <TextBox Name="InputPath" HorizontalAlignment="Left" Height="24" Margin="58,308,0,0" TextWrapping="Wrap" Text="Выберите папку с pdf-файлами" VerticalAlignment="Top" Width="238" TextChanged="InputPath_TextChanged" />
-        <Button Content="Открыть" HorizontalAlignment="Left" Margin="315,308,0,0" VerticalAlignment="Top" Width="75" Click="InputPath_Click" />
-        <Label Content="В" HorizontalAlignment="Left" Margin="14,346,0,0" VerticalAlignment="Top" />
-        <TextBox Name="OutputPath" HorizontalAlignment="Left" Height="23" Margin="58,346,0,0" TextWrapping="Wrap" Text="Выберите папку назначения" VerticalAlignment="Top" Width="238" TextChanged="OutputPath_TextChanged" />
-        <Button Content="Открыть" HorizontalAlignment="Left" Margin="315,346,0,0" VerticalAlignment="Top" Width="75" Click="OutputPath_Click" />
-        <TextBox Name="NewFileNameInput" HorizontalAlignment="Left" Height="23" Margin="14,0,0,20" TextWrapping="Wrap" Text="Новое имя файла" VerticalAlignment="Bottom" Width="467" />
-        <Button Content="След. файл" HorizontalAlignment="Left" Margin="126,399,0,0" VerticalAlignment="Top" Width="75"  Click="NextFileClick" />
-        <WebBrowser Name="webBrowser" HorizontalAlignment="Stretch" Margin="412,20,20,52" VerticalAlignment="Stretch" Grid.ColumnSpan="2" />
-        <Label Content="Тип документа" HorizontalAlignment="Left" Margin="14,277,0,0" VerticalAlignment="Top" />
-        <ComboBox Name="DocType" HorizontalAlignment="Left" Margin="126,281,0,0" VerticalAlignment="Top" Width="120">
+        <TextBox Name="AutorInput" HorizontalAlignment="Left" Height="23" Margin="81,29,0,0" TextWrapping="Wrap" Text="Введите автора" VerticalAlignment="Top" Width="439" TextChanged="AutorInput_TextChanged" />
+        <Label Content="Заглавие" HorizontalAlignment="Left" Margin="16,63,0,0" VerticalAlignment="Top" />
+        <TextBox Name="TitleInput" HorizontalAlignment="Left" Height="53" Margin="83,63,0,0" TextWrapping="Wrap" Text="Введите заглавие" VerticalAlignment="Top" Width="439" TextChanged="TitleInput_TextChanged" />
+        <Label Content="Место" HorizontalAlignment="Left" Margin="16,127,0,0" VerticalAlignment="Top" />
+        <TextBox Name="TownInput" HorizontalAlignment="Left" Height="23" Margin="83,127,0,0" TextWrapping="Wrap" Text="Введите место" VerticalAlignment="Top" Width="122" TextChanged="TownInput_TextChanged" />
+        <Label Content="Год" HorizontalAlignment="Left" Margin="16,162,0,0" VerticalAlignment="Top" />
+        <TextBox Name="YearInput" HorizontalAlignment="Left" Height="23" Margin="83,162,0,0" TextWrapping="Wrap" Text="Введите год" VerticalAlignment="Top" Width="122" TextChanged="YearInput_TextChanged" />
+        <Label Content="Страницы" HorizontalAlignment="Left" Margin="13,196,0,0" VerticalAlignment="Top" />
+        <TextBox Name="PagesInput" HorizontalAlignment="Left" Height="23" Margin="83,196,0,0" TextWrapping="Wrap" Text="Введите старницы" VerticalAlignment="Top" Width="122" TextChanged="PagesInput_TextChanged" />
+        <Label Content="Заглавие журнала" HorizontalAlignment="Left" Margin="14,231,0,0" VerticalAlignment="Top" />
+        <TextBox Name="JTitleInput" HorizontalAlignment="Left" Height="23" Margin="124,235,0,0" TextWrapping="Wrap" Text="Введите название журнала" VerticalAlignment="Top" Width="396" TextChanged="JTitleInput_TextChanged" />
+        <Label Content="№ журнала" HorizontalAlignment="Left" Margin="16,269,0,0" VerticalAlignment="Top" />
+        <TextBox Name="JNumberInput" HorizontalAlignment="Left" Height="23" Margin="147,269,0,0" TextWrapping="Wrap" Text="Введите № журнала" VerticalAlignment="Top" Width="174" TextChanged="JNumberInput_TextChanged" />
+        <Label Content="Том журнала/книги" HorizontalAlignment="Left" Margin="16,306,0,0" VerticalAlignment="Top" />
+        <TextBox Name="JVolumeInput" HorizontalAlignment="Left" Height="24" Margin="147,306,0,0" TextWrapping="Wrap" Text="Введите Том журнала/книги" VerticalAlignment="Top" Width="174" TextChanged="JVolumeInput_TextChanged" />
+        <Label Content="Из" HorizontalAlignment="Left" Margin="16,383,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.615" />
+        <TextBox Name="InputPath" HorizontalAlignment="Left" Height="24" Margin="58,383,0,0" TextWrapping="Wrap" Text="Выберите папку с pdf-файлами" VerticalAlignment="Top" Width="238" TextChanged="InputPath_TextChanged" />
+        <Button Content="Открыть" HorizontalAlignment="Left" Margin="315,383,0,0" VerticalAlignment="Top" Width="75" Click="InputPath_Click" />
+        <Label Content="В" HorizontalAlignment="Left" Margin="16,423,0,0" VerticalAlignment="Top" />
+        <TextBox Name="OutputPath" HorizontalAlignment="Left" Height="23" Margin="58,423,0,0" TextWrapping="Wrap" Text="Выберите папку назначения" VerticalAlignment="Top" Width="238" TextChanged="OutputPath_TextChanged" />
+        <Button Content="Открыть" HorizontalAlignment="Left" Margin="315,423,0,0" VerticalAlignment="Top" Width="75" Click="OutputPath_Click" />
+        <TextBox Name="NewFileNameInput" HorizontalAlignment="Left" Height="23" Margin="14,0,0,20" TextWrapping="Wrap" Text="Новое имя файла" VerticalAlignment="Bottom" Width="917" Grid.ColumnSpan="2" />
+        <Button Content="След. файл" HorizontalAlignment="Left" Margin="124,482,0,0" VerticalAlignment="Top" Width="75"  Click="NextFileClick" />
+        <WebBrowser Name="webBrowser" HorizontalAlignment="Stretch" Margin="532,20,6,87" VerticalAlignment="Stretch" Grid.ColumnSpan="2" />
+        <Label Content="Тип документа" HorizontalAlignment="Left" Margin="16,342,0,0" VerticalAlignment="Top" />
+        <ComboBox Name="DocType" HorizontalAlignment="Left" Margin="124,346,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="Книга" HorizontalAlignment="Left" Width="118" />
             <ComboBoxItem Content="Статья" HorizontalAlignment="Left" Width="118" />
             <ComboBoxItem Content="Книга?" HorizontalAlignment="Left" Width="118" />
