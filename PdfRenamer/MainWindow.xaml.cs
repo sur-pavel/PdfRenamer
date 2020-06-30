@@ -156,11 +156,10 @@ namespace PdfRenamer
 
         private void NextFileClick(object sender, RoutedEventArgs e)
         {
-        
+            currentArticle.FileName = NewFileNameInput.Text;
 
-            if (NewFileNameInput.Text.Contains(".pdf") && patterns.MatchDirectoryPath(OutputPath.Text).Success)
+            if (currentArticle.FileName.Contains(".pdf") && patterns.MatchDirectoryPath(OutputPath.Text).Success)
             {
-                currentArticle.FileName = NewFileNameInput.Text;
                 stackTraceFrame = new StackTrace().GetFrame(0);
                 log.WriteLine(stackTraceFrame.GetMethod() + " New fileName:" + nameForFile);
                 log.WriteLine(stackTraceFrame.GetMethod() + currentArticle.ToString());
@@ -193,6 +192,7 @@ namespace PdfRenamer
             else
             {
                 InfoLabel.Content = "Выберите папку с pdf-файлами и папку назначения";
+
             }
         }
 
