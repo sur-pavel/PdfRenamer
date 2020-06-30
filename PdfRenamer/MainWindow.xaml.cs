@@ -16,7 +16,6 @@ namespace PdfRenamer
     {
         internal Log log = new Log();
         private FileHandler fileHandler;
-        private IrbisHandler irbisHandler = new IrbisHandler();
         private ExcelHandler excelHandler;
 
         private Patterns patterns = new Patterns();
@@ -31,11 +30,12 @@ namespace PdfRenamer
         private int infoListIndex;
         private bool fromShowMethod;
         private StackFrame stackTraceFrame;
+        private const string DefaultOutputText = "Выберите папку с pdf-файлами";
 
         public MainWindow()
         {
             WindowState = WindowState.Maximized;
-           
+
             try
             {
                 fileHandler = new FileHandler();
@@ -52,8 +52,6 @@ namespace PdfRenamer
                 log.CreateLogFile();
                 InitializeComponent();
                 infoListIndex = 0;
-                InputPath.Text = @"d:\Downloads\на переименование\";
-                OutputPath.Text = @"d:\Downloads\переим\";
             }
             catch (Exception e)
             {
@@ -62,45 +60,6 @@ namespace PdfRenamer
             }
         }
 
-        private void NextFileClick(object sender, RoutedEventArgs e)
-        {
-            currentArticle.FileName = NewFileNameInput.Text;
-
-            if (currentArticle.FileName.Contains(".pdf"))
-            {
-                var stackTraceFrame = new StackTrace().GetFrame(0);
-                log.WriteLine(stackTraceFrame.GetMethod() + " New fileName:" + nameForFile);
-                log.WriteLine(stackTraceFrame.GetMethod() + currentArticle.ToString());
-                bool moved = fileHandler.Move(filesInfoList[infoListIndex], OutputPath.Text + currentArticle.FileName);
-                if (moved)
-                {
-                    infoListIndex++;
-                    if (infoListIndex < filesInfoList.Count)
-                    {
-                        if (!string.IsNullOrEmpty(tempFileFullName))
-                        {
-                            filesToDelete.Add(tempFileFullName);
-                        }
-
-                        Article articleForExcel = currentArticle;
-                        Task.Factory.StartNew(() =>
-                        {
-                            excelHandler.AddRow(articleForExcel);
-                            excelHandler.SaveFile();
-                        });
-                        ShowPDF();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Все файлы обработаны");
-                    }
-                }
-            }
-            else
-            {
-                InfoLabel.Content = nameForFile;
-            }
-        }
 
         private List<FileInfo> GetFiles()
         {
@@ -114,7 +73,7 @@ namespace PdfRenamer
             return new List<FileInfo>();
         }
 
-        private void ShowPDF()
+        private void ShowPdf()
         {
             fromShowMethod = true;
             stackTraceFrame = new StackTrace().GetFrame(0);
@@ -195,6 +154,47 @@ namespace PdfRenamer
             }
         }
 
+        private void NextFileClick(object sender, RoutedEventArgs e)
+        {
+            currentArticle.FileName = NewFileNameInput.Text;
+
+            if (currentArticle.FileName.Contains(".pdf"))
+            {
+                stackTraceFrame = new StackTrace().GetFrame(0);
+                log.WriteLine(stackTraceFrame.GetMethod() + " New fileName:" + nameForFile);
+                log.WriteLine(stackTraceFrame.GetMethod() + currentArticle.ToString());
+                bool moved = fileHandler.Move(filesInfoList[infoListIndex], OutputPath.Text + currentArticle.FileName);
+                if (moved)
+                {
+                    infoListIndex++;
+                    if (infoListIndex < filesInfoList.Count)
+                    {
+                        if (!string.IsNullOrEmpty(tempFileFullName))
+                        {
+                            filesToDelete.Add(tempFileFullName);
+                        }
+
+                        Article articleForExcel = currentArticle;
+                        Task.Factory.StartNew(() =>
+                        {
+                            excelHandler.AddRow(articleForExcel);
+                            excelHandler.SaveFile();
+                        });
+                        ShowPdf();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Все файлы обработаны");
+                        ClearControls();
+                    }
+                }
+            }
+            else
+            {
+                InfoLabel.Content = nameForFile;
+            }
+        }
+
         private void ManageNewFileName()
         {
             nameForFile = articleParser.GetFileName(currentArticle);
@@ -208,7 +208,7 @@ namespace PdfRenamer
                 NewFileNameInput.Text = nameForFile;
             }
 
-            log.WriteLine($"{stackTraceFrame.GetMethod()}: {currentArticle.ToString()}");
+            log.WriteLine($"{stackTraceFrame.GetMethod()}: {currentArticle}");
         }
 
         private void ClearControls()
@@ -228,19 +228,19 @@ namespace PdfRenamer
 
         private void InputPath_Click(object sender, RoutedEventArgs e)
         {
-            Forms.FolderBrowserDialog FBD = new Forms.FolderBrowserDialog();
-            if (FBD.ShowDialog() == Forms.DialogResult.OK)
+            Forms.FolderBrowserDialog fbd = new Forms.FolderBrowserDialog();
+            if (fbd.ShowDialog() == Forms.DialogResult.OK)
             {
-                InputPath.Text = FBD.SelectedPath + @"\";
+                InputPath.Text = fbd.SelectedPath + @"\";
             }
         }
 
         private void OutputPath_Click(object sender, RoutedEventArgs e)
         {
-            Forms.FolderBrowserDialog FBD = new Forms.FolderBrowserDialog();
-            if (FBD.ShowDialog() == Forms.DialogResult.OK)
+            Forms.FolderBrowserDialog fbd = new Forms.FolderBrowserDialog();
+            if (fbd.ShowDialog() == Forms.DialogResult.OK)
             {
-                OutputPath.Text = FBD.SelectedPath + @"\";
+                OutputPath.Text = fbd.SelectedPath + @"\";
             }
         }
 
@@ -311,9 +311,9 @@ namespace PdfRenamer
         private void InputPath_TextChanged(object sender, TextChangedEventArgs e)
         {
             filesInfoList = GetFiles();
-            if (filesInfoList.Count > 0)
+            if (filesInfoList.Count > 0 && !InputPath.Text.Equals(DefaultOutputText))
             {
-                ShowPDF();
+                ShowPdf();
             }
         }
 
