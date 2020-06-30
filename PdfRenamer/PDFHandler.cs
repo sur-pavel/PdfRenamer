@@ -39,7 +39,84 @@ namespace PdfRenamer
             }
             return article;
         }
+        private PdfReader GetPdfReader(FileInfo file)
+        {
+            try
+            {
+                return new PdfReader(file.FullName);
+            }
+            catch (iTextSharp.text.exceptions.InvalidPdfException)
+            {
+                log.WriteLine("Not a pdf file: " + file.Name);
+                return null;
+            }
+        }
+        private int GetArticlePdfText(Article article, PdfReader pdfReader)
+        {
+            int pageNumber = 1;
+            for (; pageNumber <= 10; pageNumber++)
+            {
+                string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, new LocationTextExtractionStrategy());
+                if (pdfText.Contains("openedition.org") || pdfText.Contains("ISBN"))
+                {
+                    article.PdfText.Append(pdfText);
+                    if (patterns.MatchBookEdition(pdfText).Success)
+                    {
+                        article.DocumentType = Article.DocType.Book;
+                    }
+                   else if (patterns.MatchWrongBook(pdfText).Success)
+                    {
+                        article.Journal.Title = patterns.MatchWrongBook(pdfText).Value.Replace("Collection : ", "");
+                        article.DocumentType = Article.DocType.WrongBook;
+                        GetOddPdfText(article, pdfReader, pageNumber);
+                    }
+                    else
+                    {
+                        article.DocumentType = Article.DocType.Article;
+                    }
 
+                    break;
+                }
+            }
+
+            return pageNumber;
+        }
+        private int GetAlterPdfText(Article article, PdfReader pdfReader, int pageNumber)
+        {
+            if (article.DocumentType == Article.DocType.Article)
+            {
+                for (int alterPageNumber = 1; alterPageNumber <= 10; alterPageNumber++)
+                {
+                    string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, alterPageNumber, new LocationTextExtractionStrategy());
+                    if (patterns.MatchStringWithPage(pdfText).Success)
+                    {
+                        firstPages = patterns.MatchStringWithPage(pdfText).Value;
+                        article.Pages = firstPages.Substring(0, firstPages.Length - 2).Trim();
+                        pageNumber = alterPageNumber;
+                        break;
+                    }
+                }
+            }
+            return pageNumber;
+        }
+        private int GetBeginPageNumber(Article article, PdfReader pdfReader, int pageNumber)
+        {
+            if (string.IsNullOrEmpty(article.PdfText.ToString()))
+            {
+                for (; pageNumber <= 10; pageNumber++)
+                {
+                    string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, new LocationTextExtractionStrategy());
+                    if (patterns.MatchTitlePage(pdfText).Success)
+                    {
+                        article.PdfText.Append(pdfText);
+                        article.DocumentType = Article.DocType.Book;
+                        break;
+                    }
+                }
+            }
+
+            return pageNumber;
+        }
         private void GetLastPageNumber(Article article, PdfReader pdfReader)
         {
             int lastPageNumber = pdfReader.NumberOfPages;
@@ -76,70 +153,12 @@ namespace PdfRenamer
             }
         }
 
-        private int GetAlterPdfText(Article article, PdfReader pdfReader, int pageNumber)
-        {
-            if (article.DocumentType == Article.DocType.Article)
-            {
-                for (int alterPageNumber = 1; alterPageNumber <= 10; alterPageNumber++)
-                {
-                    string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, alterPageNumber, new LocationTextExtractionStrategy());
-                    if (patterns.MatchStringWithPage(pdfText).Success)
-                    {
-                        firstPages = patterns.MatchStringWithPage(pdfText).Value;
-                        article.Pages = firstPages.Substring(0, firstPages.Length - 2).Trim();
-                        pageNumber = alterPageNumber;
-                        break;
-                    }
-                }
-            }
-            return pageNumber;
-        }
+       
+        
 
-        private int GetBeginPageNumber(Article article, PdfReader pdfReader, int pageNumber)
-        {
-            if (string.IsNullOrEmpty(article.PdfText.ToString()))
-            {
-                for (; pageNumber <= 10; pageNumber++)
-                {
-                    string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, new LocationTextExtractionStrategy());
-                    if (patterns.MatchTitlePage(pdfText).Success)
-                    {
-                        article.PdfText.Append(pdfText);
-                        article.DocumentType = Article.DocType.Book;
-                        break;
-                    }
-                }
-            }
+        
 
-            return pageNumber;
-        }
-
-        private int GetArticlePdfText(Article article, PdfReader pdfReader)
-        {
-            int pageNumber = 1;
-            for (; pageNumber <= 10; pageNumber++)
-            {
-                string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, new LocationTextExtractionStrategy());
-                if (pdfText.Contains("openedition.org") || pdfText.Contains("ISBN"))
-                {
-                    article.PdfText.Append(pdfText);
-                    if (patterns.MatchBookEdition(pdfText).Success)
-                    {
-                        article.DocumentType = Article.DocType.Book;
-                    }
-                    if (patterns.MatchWrongBook(pdfText).Success)
-                    {
-                        article.Journal.Title = patterns.MatchWrongBook(pdfText).Value.Replace("Collection : ", "");
-                        article.DocumentType = Article.DocType.WrongBook;
-                        GetOddPdfText(article, pdfReader, pageNumber);
-                    }
-
-                    break;
-                }
-            }
-
-            return pageNumber;
-        }
+       
 
         private void GetOddPdfText(Article article, PdfReader pdfReader, int pageNumber)
         {
@@ -156,34 +175,22 @@ namespace PdfRenamer
             }
         }
 
-        private PdfReader GetPdfReader(FileInfo file)
-        {
-            try
-            {
-                return new PdfReader(file.FullName);
-            }
-            catch (iTextSharp.text.exceptions.InvalidPdfException)
-            {
-                log.WriteLine("Not a pdf file: " + file.Name);
-                return null;
-            }
-        }
 
-        internal void CreatePDF(Article article, FileInfo fileInfo, string outPutPath)
-        {
-            inputFile = fileInfo.FullName;
-            outputFile = fileInfo.DirectoryName + article.FileName;
-            Document doc = new Document();
-            MemoryStream memoryStream = new MemoryStream();
-            PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
-            doc.Open();
-            doc.Add(new Paragraph("Some Text"));
-            writer.CloseStream = false;
-            doc.Close();
-            memoryStream.Position = 0;
-
-            SavePDF();
-        }
+//        internal void CreatePDF(Article article, FileInfo fileInfo, string outPutPath)
+//        {
+//            inputFile = fileInfo.FullName;
+//            outputFile = fileInfo.DirectoryName + article.FileName;
+//            Document doc = new Document();
+//            MemoryStream memoryStream = new MemoryStream();
+//            PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
+//            doc.Open();
+//            doc.Add(new Paragraph("Some Text"));
+//            writer.CloseStream = false;
+//            doc.Close();
+//            memoryStream.Position = 0;
+//
+//            SavePDF();
+//        }
 
         private void SavePDF()
         {

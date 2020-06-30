@@ -52,8 +52,8 @@ namespace PdfRenamer
                 log.CreateLogFile();
                 InitializeComponent();
                 infoListIndex = 0;
-                InputPath.Text = @"d:\на переименование\";
-                OutputPath.Text = @"d:\переим\";
+                InputPath.Text = @"d:\Downloads\на переименование\";
+                OutputPath.Text = @"d:\Downloads\переим\";
             }
             catch (Exception e)
             {
@@ -142,6 +142,7 @@ namespace PdfRenamer
                 currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
             }
 
+            currentArticle = articleParser.ParsePdfText(currentArticle);
             return currentArticle;
         }
 
