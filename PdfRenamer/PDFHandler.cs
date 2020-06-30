@@ -153,13 +153,6 @@ namespace PdfRenamer
             }
         }
 
-       
-        
-
-        
-
-       
-
         private void GetOddPdfText(Article article, PdfReader pdfReader, int pageNumber)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -176,61 +169,5 @@ namespace PdfRenamer
         }
 
 
-//        internal void CreatePDF(Article article, FileInfo fileInfo, string outPutPath)
-//        {
-//            inputFile = fileInfo.FullName;
-//            outputFile = fileInfo.DirectoryName + article.FileName;
-//            Document doc = new Document();
-//            MemoryStream memoryStream = new MemoryStream();
-//            PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
-//            doc.Open();
-//            doc.Add(new Paragraph("Some Text"));
-//            writer.CloseStream = false;
-//            doc.Close();
-//            memoryStream.Position = 0;
-//
-//            SavePDF();
-//        }
-
-        private void SavePDF()
-        {
-            using (Document document = new Document())
-            {
-                using (PdfSmartCopy copy = new PdfSmartCopy(document, new FileStream(Server.MapPath(outputFile),
-                    FileMode.Create)))
-                {
-                    document.Open();
-                    for (int i = 0; i < 2; ++i)
-                    {
-                        PdfReader reader = new PdfReader(AddDataSheets(i.ToString()));
-                        copy.AddPage(copy.GetImportedPage(reader, 1));
-                    }
-                }
-            }
-        }
-
-        public byte[] AddDataSheets(string _data)
-        {
-            string pdfTemplatePath = Server.MapPath(inputFile);
-            PdfReader reader = new PdfReader(pdfTemplatePath);
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (PdfStamper stamper = new PdfStamper(reader, ms))
-                {
-                    AcroFields form = stamper.AcroFields;
-                    var fieldKeys = form.Fields.Keys;
-                    foreach (string fieldKey in fieldKeys)
-                    {
-                        //Change some data
-                        if (fieldKey.Contains("Address"))
-                        {
-                            form.SetField(fieldKey, _data);
-                        }
-                    }
-                    stamper.FormFlattening = true;
-                }
-                return ms.ToArray();
-            }
-        }
     }
 }
