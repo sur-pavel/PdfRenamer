@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 
 namespace PdfRenamer
@@ -47,7 +48,10 @@ namespace PdfRenamer
 
         internal string CreateTempFile(FileInfo currentFileInfo)
         {
-            string tempFileFullName = Path.GetTempPath() + currentFileInfo.Name;
+            var enc = Encoding.GetEncoding(1251);
+
+            string fileName = System.Web.HttpUtility.UrlEncode(currentFileInfo.Name, enc);
+            string tempFileFullName = Path.GetTempPath() + fileName;
 
             try
             {
@@ -55,7 +59,7 @@ namespace PdfRenamer
             }
             catch (Exception ex)
             {
-                Log.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                Log.WriteLine("Can't create temp file " + currentFileInfo.Name + ": " + ex.Message + "\n" + ex.StackTrace);
             }
             return tempFileFullName;
         }

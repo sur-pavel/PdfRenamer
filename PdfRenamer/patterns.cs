@@ -29,7 +29,8 @@ namespace PdfRenamer
         internal Match MatchBookEdition(string str)
         {
             str = Regex.Replace(str, @"\?", "");
-            return Regex.Match(str, @"([\u00C0-\u017Fa-zA-Z'’?-]+\s?){1,3}\s?\:\s?[\u00C0-\u017Fa-zA-Z'’,?-]{1}.+\d{4}");
+            
+            return Regex.Match(str, @"([\u00C0-\u017FA-zА-я'’?-]+\s?){1,3}\s?\.?\:\s?[\u00C0-\u017FA-zА-я'’,?-]{1}.+\d{4}");
         }
 
         internal Match MatchBookAutor(string str)

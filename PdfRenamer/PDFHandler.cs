@@ -59,6 +59,8 @@ namespace PdfRenamer
                 string pdfText = PdfTextExtractor.GetTextFromPage(pdfReader, pageNumber, new LocationTextExtractionStrategy());
                 if (pdfText.Contains("openedition.org") || pdfText.Contains("ISBN"))
                 {
+                    pdfText = Regex.Replace(pdfText, "\n", " ");
+                    pdfText = Regex.Replace(pdfText, "  ", " ");
                     article.PdfText.Append(pdfText);
                     if (patterns.MatchBookEdition(pdfText).Success)
                     {

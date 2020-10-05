@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -55,8 +56,7 @@ namespace PdfRenamer
             }
             catch (Exception e)
             {
-                log.WriteLine(e.Message, e.StackTrace);
-                throw;
+                log.WriteLine(e.Message, e.StackTrace);                
             }
         }
 
@@ -84,6 +84,8 @@ namespace PdfRenamer
             ManageNewFileName();
 
             tempFileFullName = fileHandler.CreateTempFile(filesInfoList[infoListIndex]);
+            
+            
             webBrowser.Navigate(tempFileFullName);
 
             OldFileNameLabel.Content = filesInfoList[infoListIndex].Name;
@@ -95,13 +97,18 @@ namespace PdfRenamer
         {
             currentArticle = new Article();
             currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
-            while (currentArticle.PdfText.ToString().Equals(""))
-            {
-                infoListIndex++;
-                currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
-            }
+            //while (currentArticle.PdfText.ToString().Equals("") && infoListIndex < (filesInfoList.Count -1))
+            //{
+            //    infoListIndex++;
+            //    log.WriteLine(infoListIndex + " of " + filesInfoList.Count + " files");
 
-            currentArticle = articleParser.ParsePdfText(currentArticle);
+            //    currentArticle = pdfHandler.GetPdfPageText(filesInfoList[infoListIndex], currentArticle);
+            //}
+
+            if (!currentArticle.PdfText.ToString().Equals(""))
+            {
+                currentArticle = articleParser.ParsePdfText(currentArticle);
+            }
             return currentArticle;
         }
 
@@ -319,6 +326,11 @@ namespace PdfRenamer
 
         private void OutputPath_TextChanged(object sender, TextChangedEventArgs e)
         {
+        }
+
+        private void DocType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
